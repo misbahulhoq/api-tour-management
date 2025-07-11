@@ -1,0 +1,34 @@
+{
+  "name": "ph-tour-management-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only  ./src/server.ts",
+    "production": "NODE_ENV=production node ./dist/server.js",
+    "lint": "npx eslint ./src",
+    "build": "npx eslint ./src && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.3",
+    "@types/mongoose": "^5.11.97",
+    "eslint": "^9.30.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.2",
+    "zod": "^3.25.76"
+  }
+}
