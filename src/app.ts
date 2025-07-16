@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import router from "./app/router";
 import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";

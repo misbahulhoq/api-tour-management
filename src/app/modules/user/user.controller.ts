@@ -2,15 +2,18 @@ import { Request, Response } from "express";
 import { User } from "./user.model";
 import httpsStatusCode from "http-status-codes";
 import { UserSevices } from "./user.service";
+import sendResponse from "../../utils/sendResponse";
 
 const createUser = async (req: Request, res: Response) => {
   const user = await UserSevices.createUser(req.body);
-  res.status(httpsStatusCode.CREATED).send({
+  sendResponse(res, {
+    success: true,
+    statusCode: httpsStatusCode.CREATED,
     message: "User created successfully",
-    user,
+    data: user,
   });
 };
-const getUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req: Request, res: Response) => {
   const users = await User.find();
   res.status(httpsStatusCode.OK).send({
     message: "Users fetched successfully",
@@ -20,5 +23,5 @@ const getUsers = async (req: Request, res: Response) => {
 
 export const UserController = {
   createUser,
-  getUsers,
+  getAllUsers,
 };
