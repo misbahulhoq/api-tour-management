@@ -7,7 +7,7 @@ interface IResponse<Data> {
   statusCode: number;
   success: boolean;
   message: string;
-  data: Data;
+  data?: Data;
   meta?: IMeta;
 }
 

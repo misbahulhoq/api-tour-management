@@ -7,10 +7,18 @@ export const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) => {
-  const statusCode = error.statusCode || 500;
-  res.status(statusCode).send({
-    message: error.message || "Internal server error",
-    error,
-    stack: process.env.NODE_ENV === "development" ? error.stack : null,
-  });
+  if (error instanceof Error && error.isOperational) {
+    const statusCode = error.statusCode;
+    res.status(statusCode).send({
+      message: error.message || "Internal server error",
+      error,
+      stack: process.env.NODE_ENV === "development" ? error.stack : null,
+    });
+  } else {
+    res.status(500).send({
+      message: "Internal server error",
+      error,
+      stack: process.env.NODE_ENV === "development" ? error.stack : null,
+    });
+  }
 };
