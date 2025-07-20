@@ -13,11 +13,13 @@ const createUser = async (req: Request, res: Response) => {
     data: user,
   });
 };
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (_req: Request, res: Response) => {
   const users = await User.find();
-  res.status(httpsStatusCode.OK).send({
+  sendResponse(res, {
+    success: true,
+    statusCode: httpsStatusCode.OK,
     message: "Users fetched successfully",
-    users,
+    data: users,
   });
 };
 
