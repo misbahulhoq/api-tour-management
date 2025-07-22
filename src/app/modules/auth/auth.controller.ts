@@ -1,23 +1,17 @@
-import { IUser } from "../user/user.interfaces";
-import jwt from "jsonwebtoken";
-import { User } from "../user/user.model";
-import { comparePassword } from "../../utils/hashPassword";
-
-export const login = async (payload: Partial<IUser>) => {
-  const { email } = payload;
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new Error("User not found");
-  }
-  const isValidPassword = await comparePassword(
-    payload.password as string,
-    user.password as string
-  );
-  return {
-    authToken: jwt.sign({ email }, process.env.JWT_SECRET || "something", {
-      expiresIn: "30d",
-    }),
-  };
+import { Request, Response } from "express";
+import AuthServices from "./auth.services";
+import sendResponse from "../../utils/sendResponse";
+export const login = async (req: Request, res: Response) => {
+  const user = await AuthServices.login(req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "User logged in successfully",
+    data: user,
+  });
 };
 
-export default login;
+export const AuthController = {
+  login,
+};
+export default AuthController;

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Server } from "http";
 import app from "./app";
 import envVars from "./app/config/envvars.config";
+import { seedSuperAdmin } from "./app/utils/seedSuperAdmin";
 const { PORT, MONGO_URL } = envVars;
 let server: Server;
 
@@ -13,6 +14,7 @@ const startServer = async () => {
     console.log("Connected to MongoDB");
     server = app.listen(PORT, () => {
       console.log("Server is running on port", PORT);
+      seedSuperAdmin();
     });
   } catch (error) {
     console.log(error);
