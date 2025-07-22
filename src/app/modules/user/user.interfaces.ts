@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 export enum Role {
   ADMIN = "ADMIN",
   USER = "USER",
-  SUPERADMIN = "SUPERADMIN",
+  SUPERADMIN = "SUPER_ADMIN",
 }
 
 export enum IsActive {

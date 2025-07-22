@@ -1,7 +1,6 @@
 import { IUser } from "./user.interfaces";
 import { User } from "./user.model";
 import hashPassword from "../../utils/hashPassword";
-import jwt from "jsonwebtoken";
 import AppError from "../../utils/AppError";
 import https from "http-status-codes";
 import { generateToken } from "../../utils/jwt";
