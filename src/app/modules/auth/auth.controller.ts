@@ -40,12 +40,17 @@ const logout = async (req: Request, res: Response) => {
 
 const loginWithGoogle = async (req: Request, res: Response) => {
   const user = req.user;
+  let redirectTo = req.query.state as string;
+
+  if (redirectTo.startsWith("/")) {
+    redirectTo = redirectTo.slice(1);
+  }
   if (!user) {
     throw new AppError(404, "User not found");
   }
   const tokenInfo = createUserTokens(user);
   setAuthCookies(res, tokenInfo);
-  res.redirect(envVars.FRONTEND_URL);
+  res.redirect(`${envVars.FRONTEND_URL}/${redirectTo}`);
 };
 
 export const AuthController = {
