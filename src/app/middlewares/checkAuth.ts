@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import envVars from "../config/envvars.config";
@@ -17,7 +16,7 @@ export const checkAuth = (...authRoles: string[]) => {
     if (!authRoles.includes(verifiedToken.role)) {
       throw new AppError(401, "Unauthorized");
     }
-    console.log(verifiedToken);
+    req.user = verifiedToken;
     next();
   };
 };
