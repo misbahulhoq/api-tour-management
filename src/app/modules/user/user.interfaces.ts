@@ -18,6 +18,7 @@ export interface IAuthProvider {
   providerId: string;
 }
 export interface IUser {
+  _id: Types.ObjectId;
   name: string;
   email: string;
   password?: string; // Optional as it might not be needed for auth provider logins

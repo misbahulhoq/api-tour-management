@@ -11,7 +11,7 @@ export const checkAuth = (...authRoles: string[]) => {
     }
     const verifiedToken = verifyToken(
       authToken,
-      envVars.JWT_SECRET
+      envVars.JWT_ACCESS_SECRET
     ) as JwtPayload;
     if (!authRoles.includes(verifiedToken.role)) {
       throw new AppError(401, "Unauthorized");

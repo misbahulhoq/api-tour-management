@@ -22,8 +22,8 @@ const createUser = async (payload: Partial<IUser>) => {
 
   const authToken = generateToken(
     { email, id: user._id },
-    envVars.JWT_SECRET,
-    envVars.JWT_EXPIRES_IN
+    envVars.JWT_ACCESS_SECRET,
+    envVars.JWT_ACCESS_EXPIRES
   );
 
   return { authToken };
