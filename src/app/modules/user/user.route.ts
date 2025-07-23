@@ -10,5 +10,10 @@ const router = express.Router();
 
 router.post("/register", validateRequest(createUserZodSchema), createUser);
 router.get("/all", checkAuth("ADMIN", Role.SUPERADMIN), getAllUsers);
+router.patch(
+  "/update/:id",
+  checkAuth(...Object.values(Role)),
+  UserController.updateUser
+);
 
 export const UserRoutes = router;

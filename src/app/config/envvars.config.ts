@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const requiredEnvVars = [
+  "NODE_ENV",
   "MONGO_URL",
   "JWT_SECRET",
   "JWT_EXPIRES_IN",

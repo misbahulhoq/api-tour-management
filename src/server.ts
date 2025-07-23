@@ -59,3 +59,5 @@ process.on("uncaughtException", (error) => {
   console.log(error);
   process.exit(1);
 });
+
+console.log(process.env.NODE_ENV);
