@@ -25,8 +25,19 @@ const getNewAccessToken = async (req: Request, res: Response) => {
   });
 };
 
+const logout = async (req: Request, res: Response) => {
+  res.clearCookie("authToken");
+  res.clearCookie("refreshToken");
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "User logged out successfully",
+  });
+};
+
 export const AuthController = {
   login,
   getNewAccessToken,
+  logout,
 };
 export default AuthController;
