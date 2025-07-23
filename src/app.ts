@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import router from "./app/router";
 import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
 import { notFound } from "./app/middlewares/notFound";
@@ -7,13 +8,14 @@ import { notFound } from "./app/middlewares/notFound";
 const app = express();
 
 // middleware
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 
 // routes
 app.use("/api/v1", router);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.status(200).send({ message: "Hello from express" });
 });
 
