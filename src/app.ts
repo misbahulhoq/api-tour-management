@@ -7,6 +7,7 @@ import { notFound } from "./app/middlewares/notFound";
 import passport from "passport";
 import expressSession from "express-session";
 const app = express();
+import "./app/config/passport";
 
 // middleware
 app.use(
