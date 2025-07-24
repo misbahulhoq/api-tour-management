@@ -19,6 +19,7 @@ passport.use(
     async (email: string, password: string, done) => {
       try {
         const user = await User.findOne({ email });
+
         if (!user) {
           return done(null, false, { message: "User not found" });
         }
@@ -27,10 +28,9 @@ passport.use(
           (auth) => auth.provider === "google"
         );
 
-        if (googleAuthenticated) {
-          return done(null, false, {
-            message: "User already authenticated with Google",
-          });
+        if (googleAuthenticated && !user.password) {
+          console.log("returning fro google auth");
+          return done("User already authenticated with Google");
         }
 
         const isValidPassword = await bcryptjs.compare(
@@ -41,7 +41,10 @@ passport.use(
           return done(null, false, { message: "Invalid password" });
         }
 
-        return done(null, user);
+        const plainUser = user.toObject();
+        delete plainUser.password;
+        console.log("executed successfully");
+        return done(null, plainUser);
       } catch (error) {
         console.log(error);
         done(error);
@@ -89,6 +92,7 @@ passport.use(
   )
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 passport.serializeUser((user: any, done: VerifyCallback) => {
   done(null, user._id);
 });

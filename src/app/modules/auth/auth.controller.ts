@@ -1,19 +1,33 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import AuthServices from "./auth.services";
 import sendResponse from "../../utils/sendResponse";
 import { setAuthCookies } from "../../utils/setAuthCookie";
 import { createUserTokens } from "../../utils/userTokens";
 import AppError from "../../utils/AppError";
 import envVars from "../../config/envvars.config";
-const login = async (req: Request, res: Response) => {
-  const user = await AuthServices.credentialsLogin(req.body);
-  setAuthCookies(res, user.tokenInfo);
-  sendResponse(res, {
-    success: true,
-    statusCode: 200,
-    message: "User logged in successfully",
-    data: user,
-  });
+import passport from "passport";
+const login = async (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate(
+    "local",
+    { failureRedirect: "/login" },
+    async (err: any, user: any, info: any) => {
+      if (err) {
+        console.log("returning error", err);
+        return next(new AppError(401, err));
+      }
+      if (!user) {
+        return next(new AppError(401, "Invalid credentials"));
+      }
+      const tokenInfo = createUserTokens(user);
+      setAuthCookies(res, tokenInfo);
+      sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "User logged in successfully",
+        data: { user, tokenInfo },
+      });
+    }
+  )(req, res, next);
 };
 
 const getNewAccessToken = async (req: Request, res: Response) => {

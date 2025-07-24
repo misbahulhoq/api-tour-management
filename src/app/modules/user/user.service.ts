@@ -12,7 +12,7 @@ const createUser = async (payload: Partial<IUser>) => {
   const { email } = payload;
   const userExists = await User.findOne({ email });
   if (userExists) {
-    throw new AppError(https.CONFLICT, "User already exists");
+    // throw new AppError(https.CONFLICT, "User already exists");
   }
   const password = await hashPassword(payload.password as string);
   payload.password = password;
